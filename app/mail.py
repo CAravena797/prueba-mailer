@@ -36,10 +36,10 @@ def create():
             errors.append('Contenido es obligatorio')
 
         if len(errors) == 0:
-            send(email, subject, content)
-            db , c = get_db()
-            c.execute("INSERT INTO email (email, subject, content) VALUES (%s, %s, %s)", (email, subject, content))
-            db.commit()
+            if send(email, subject, content):
+                db , c = get_db()
+                c.execute("INSERT INTO email (email, subject, content) VALUES (%s, %s, %s)", (email, subject, content))
+                db.commit()
 
             return redirect(url_for('mail.index'))
         else:
@@ -56,5 +56,7 @@ def send(to, subject, content):
     
     if resp.status_code == 200:
         print('Enviado correctamente')
+        return True
     else:
         print('Error al enviar correo, razón: ' + resp.text )
+        return False
