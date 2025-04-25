@@ -57,4 +57,4 @@ def send(to, subject, content):
     if resp.status_code == 200:
         print('Enviado correctamente')
     else:
-        print('Error al enviar correo, razón: {resp.text}')
+        print('Error al enviar correo, razón: ' + resp.text )
